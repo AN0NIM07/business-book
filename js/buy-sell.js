@@ -10,6 +10,9 @@ const dateInput = document.getElementById("date");
 const cqInput = document.getElementById("cqDate");
 const form = document.getElementById("entryForm");
 const fileInput = document.getElementById("photo");
+const successPopup = document.getElementById("successPopup");
+const closePopup = document.getElementById("closePopup");
+const loadingOverlay = document.getElementById("loadingOverlay");
 
 // Other fields
 const actionInput = document.getElementById("action");
@@ -21,7 +24,6 @@ const priceInput = document.getElementById("price");
 const brokerInput = document.getElementById("broker");
 const brokeriInput = document.getElementById("brokeri");
 const detailsInput = document.getElementById("details");
-const loadingOverlay = document.getElementById("loadingOverlay");
 
 // ===============================
 // AUTO-FILL TODAY DATE
@@ -57,7 +59,10 @@ function toBase64(file) {
 form.addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  // Show loading overlay
+  const submitBtn = form.querySelector(".submit-btn");
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = 0.6;
+
   loadingOverlay.style.display = "flex";
 
   // Handle image
@@ -91,14 +96,15 @@ form.addEventListener("submit", async function(e) {
   })
   .then(res => res.json())
   .then(resp => {
-    // Hide loading overlay
     loadingOverlay.style.display = "none";
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = 1;
 
     if(resp.status === "success") {
       successPopup.style.display = "block";
       form.reset();
-      dateInput.value = new Date().toISOString().split('T')[0];
-      cqInput.value = new Date().toISOString().split('T')[0];
+      dateInput.value = today;
+      cqInput.value = today;
     } else {
       alert("❌ Submission error: " + resp.message);
       console.error(resp);
@@ -106,15 +112,22 @@ form.addEventListener("submit", async function(e) {
   })
   .catch(err => {
     loadingOverlay.style.display = "none";
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = 1;
     alert("❌ Error submitting data. See console for details.");
     console.error(err);
   });
-
 });
 
+// ===============================
+// POPUP HANDLING
+// ===============================
+closePopup.onclick = function() {
+  successPopup.style.display = "none";
+};
 
-
-
-
-
-
+window.onclick = function(event) {
+  if(event.target == successPopup){
+    successPopup.style.display = "none";
+  }
+};
