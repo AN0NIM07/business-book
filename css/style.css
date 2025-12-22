@@ -149,5 +149,90 @@ button {
   color: #555;
   cursor: pointer;
 }
+/* ===== BUY/SELL ENTRY PAGE ===== */
+.entry-body {
+  background: #f4f5f7;
+}
+
+.entry-form {
+  margin: 15px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.app-header {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 20px 15px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 15px;
+}
+
+.app-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.app-header p {
+  margin-top: 5px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Form rows */
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+input, select, textarea {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+  min-height: 60px;
+}
+
+.submit-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Popup is already added from previous step */
+
 
 
