@@ -8,21 +8,16 @@
 </head>
 <body class="entry-body">
 
+  <!-- Back to Home button -->
+  <a href="index.html" class="back-btn">← Home</a>
+
+  <!-- Header -->
   <div class="app-header">
     <h2>🛒 Buy / Sell Entry</h2>
     <p>Fill all required details</p>
   </div>
 
-  <!-- Back to Home button -->
-<a href="index.html" class="back-btn">← Home</a>
-
-<!-- Loading Overlay -->
-<div id="loadingOverlay" class="loading-overlay">
-  <div class="spinner"></div>
-  <p>Submitting...</p>
-</div>
-
-
+  <!-- Form -->
   <form id="entryForm" class="entry-form">
 
     <!-- Row: Date & Action -->
@@ -106,7 +101,6 @@
 
     <!-- Submit Button -->
     <button type="submit" class="submit-btn">SUBMIT</button>
-
   </form>
 
   <!-- Success Popup -->
@@ -118,7 +112,13 @@
     </div>
   </div>
 
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Submitting...</p>
+  </div>
+
+  <!-- JS -->
   <script src="js/buy-sell.js"></script>
 </body>
 </html>
-
