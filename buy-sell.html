@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy/Sell Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h2>Buy / Sell Entry</h2>
+
+<form id="entryForm">
+
+  <!-- 1. Date -->
+  <label>Date</label>
+  <input type="date" id="date" required>
+
+  <!-- 2. Action -->
+  <label>Action</label>
+  <select id="action" required>
+    <option value="">Select</option>
+    <option>BUY</option>
+    <option>SELL</option>
+  </select>
+
+  <!-- 3. Company Name -->
+  <label>Company Name</label>
+  <input type="text" id="company" required>
+
+  <!-- 4. Product Type -->
+  <label>Product Type</label>
+  <select id="productType">
+    <option>D/O</option>
+    <option>Slip</option>
+  </select>
+
+  <!-- 5. Product -->
+  <label>Product</label>
+  <input type="text" id="product">
+
+  <!-- 6. Weight -->
+  <label>Weight</label>
+  <input type="text" id="weight">
+
+  <!-- 7. Price -->
+  <label>Price</label>
+  <input type="number" id="price">
+
+  <!-- 8. CQ Date -->
+  <label>CQ Date</label>
+  <input type="date" id="cqDate">
+
+  <!-- 9. Broker -->
+  <label>Broker</label>
+  <input type="text" id="broker">
+
+  <!-- 10. Brokeri Bill -->
+  <label>Brokeri Bill</label>
+  <input type="number" id="brokeri">
+
+  <!-- 11. Mamo-Pic -->
+  <label>Mamo Pic</label>
+  <input type="file" id="photo" accept="image/*">
+
+  <!-- 12. Other Details -->
+  <label>Other Details</label>
+  <textarea id="details"></textarea>
+
+  <button type="submit">SUBMIT</button>
+
+</form>
+
+<script src="js/buy-sell.js"></script>
+</body>
+</html>
