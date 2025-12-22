@@ -21,6 +21,7 @@ const priceInput = document.getElementById("price");
 const brokerInput = document.getElementById("broker");
 const brokeriInput = document.getElementById("brokeri");
 const detailsInput = document.getElementById("details");
+const loadingOverlay = document.getElementById("loadingOverlay");
 
 // ===============================
 // AUTO-FILL TODAY DATE
@@ -56,7 +57,10 @@ function toBase64(file) {
 form.addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  // Handle image if uploaded
+  // Show loading overlay
+  loadingOverlay.style.display = "flex";
+
+  // Handle image
   let imageBase64 = "";
   let imageType = "";
   if (fileInput.files.length > 0) {
@@ -65,7 +69,6 @@ form.addEventListener("submit", async function(e) {
     imageBase64 = await toBase64(file);
   }
 
-  // Prepare payload
   const payload = {
     date: convertToDDMMYYYY(dateInput.value),
     action: actionInput.value,
@@ -82,57 +85,34 @@ form.addEventListener("submit", async function(e) {
     imageType: imageType
   };
 
-  // Send data to Google Apps Script
   fetch(scriptURL, {
     method: "POST",
     body: JSON.stringify(payload)
   })
   .then(res => res.json())
   .then(resp => {
+    // Hide loading overlay
+    loadingOverlay.style.display = "none";
+
     if(resp.status === "success") {
-      // Get popup elements
-const successPopup = document.getElementById("successPopup");
-const closePopup = document.getElementById("closePopup");
-
-// Inside fetch .then(resp => ...)
-if(resp.status === "success") {
-  successPopup.style.display = "block";  // Show popup
-  form.reset();
-  // Reset date fields
-  dateInput.value = today;
-  cqInput.value = today;
-} else {
-  alert("❌ Submission error: " + resp.message);
-  console.error(resp);
-}
-
-// Close popup when user clicks X
-closePopup.onclick = function() {
-  successPopup.style.display = "none";
-}
-
-// Optional: Close popup when clicking outside
-window.onclick = function(event) {
-  if(event.target == successPopup){
-    successPopup.style.display = "none";
-  }
-}
-
+      successPopup.style.display = "block";
       form.reset();
-      // Reset date fields to today
-      dateInput.value = today;
-      cqInput.value = today;
+      dateInput.value = new Date().toISOString().split('T')[0];
+      cqInput.value = new Date().toISOString().split('T')[0];
     } else {
       alert("❌ Submission error: " + resp.message);
       console.error(resp);
     }
   })
   .catch(err => {
+    loadingOverlay.style.display = "none";
     alert("❌ Error submitting data. See console for details.");
     console.error(err);
   });
 
 });
+
+
 
 
 
