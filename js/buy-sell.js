@@ -1,8 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-  const scriptURL = "https://script.google.com/macros/s/AKfycbze3eRW5j3DByeBGz2cy8sHZjPGE1ncSp3vslZADXKbeIqmakXbDIpNrRhXkdE46RAE/exec";
+  // ===============================
+  // CONFIG
+  // ===============================
+  const scriptURL = "https://script.google.com/macros/s/AKfycbze3eRW5j3DByeBGz2cy8sHZjPGE1ncSp3vslZADXKbeIqmakXbDIpNrRhXkdE46RAE/exec"; // <-- replace with your GAS Web App URL
 
-  // Elements
+  // ===============================
+  // ELEMENTS
+  // ===============================
   const form = document.getElementById("entryForm");
   const dateInput = document.getElementById("date");
   const cqInput = document.getElementById("cqDate");
@@ -21,12 +26,17 @@ document.addEventListener("DOMContentLoaded", function() {
   const successPopup = document.getElementById("successPopup");
   const closePopup = document.getElementById("closePopup");
 
-  // Auto-fill today's date
+  // ===============================
+  // INITIAL STATE
+  // ===============================
+  loadingOverlay.style.display = "none";
   const today = new Date().toISOString().split('T')[0];
   dateInput.value = today;
   cqInput.value = today;
 
-  // Helper
+  // ===============================
+  // HELPERS
+  // ===============================
   function convertToDDMMYYYY(dateStr) {
     if (!dateStr) return "";
     const d = new Date(dateStr);
@@ -42,22 +52,35 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Submit
+  // ===============================
+  // FORM SUBMIT
+  // ===============================
   form.addEventListener("submit", async function(e){
     e.preventDefault();
 
-    // Show loading & disable button
+    console.log("✅ Submit clicked");
+
+    // Show loading overlay
     loadingOverlay.style.display = "flex";
+
+    // Disable submit button
     submitBtn.disabled = true;
     submitBtn.style.opacity = 0.6;
 
-    let imageBase64 = "", imageType = "";
+    // Handle image file
+    let imageBase64 = "";
+    let imageType = "";
     if(fileInput.files.length > 0){
       const file = fileInput.files[0];
       imageType = file.type;
-      imageBase64 = await toBase64(file);
+      try {
+        imageBase64 = await toBase64(file);
+      } catch(err){
+        console.error("Error reading image file:", err);
+      }
     }
 
+    // Build payload
     const payload = {
       date: convertToDDMMYYYY(dateInput.value),
       action: actionInput.value,
@@ -74,33 +97,52 @@ document.addEventListener("DOMContentLoaded", function() {
       imageType: imageType
     };
 
-    fetch(scriptURL, {method:"POST", body:JSON.stringify(payload)})
-      .then(res => res.json())
+    console.log("Payload:", payload);
+
+    // Send to Google Apps Script
+    fetch(scriptURL, { method: "POST", body: JSON.stringify(payload) })
+      .then(res => {
+        console.log("Raw fetch response:", res);
+        return res.json();
+      })
       .then(resp => {
+        console.log("Parsed response:", resp);
+
+        // Hide loading & enable button
         loadingOverlay.style.display = "none";
         submitBtn.disabled = false;
         submitBtn.style.opacity = 1;
 
+        // Success
         if(resp.status === "success"){
           successPopup.style.display = "block";
           form.reset();
           dateInput.value = today;
           cqInput.value = today;
         } else {
-          alert("❌ Submission error: " + resp.message);
+          alert("❌ Submission error: " + (resp.message || JSON.stringify(resp)));
         }
       })
       .catch(err => {
+        console.error("Fetch error:", err);
         loadingOverlay.style.display = "none";
         submitBtn.disabled = false;
         submitBtn.style.opacity = 1;
         alert("❌ Error submitting data. See console for details.");
-        console.error(err);
       });
   });
 
-  // Popup handling
-  closePopup.onclick = () => { successPopup.style.display = "none"; };
-  window.onclick = (event) => { if(event.target==successPopup){ successPopup.style.display="none"; } };
+  // ===============================
+  // POPUP HANDLING
+  // ===============================
+  closePopup.onclick = function() {
+    successPopup.style.display = "none";
+  };
+
+  window.onclick = function(event) {
+    if(event.target == successPopup){
+      successPopup.style.display = "none";
+    }
+  };
 
 });
