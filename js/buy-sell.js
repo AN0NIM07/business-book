@@ -90,7 +90,34 @@ form.addEventListener("submit", async function(e) {
   .then(res => res.json())
   .then(resp => {
     if(resp.status === "success") {
-      alert("✅ Data submitted successfully!");
+      // Get popup elements
+const successPopup = document.getElementById("successPopup");
+const closePopup = document.getElementById("closePopup");
+
+// Inside fetch .then(resp => ...)
+if(resp.status === "success") {
+  successPopup.style.display = "block";  // Show popup
+  form.reset();
+  // Reset date fields
+  dateInput.value = today;
+  cqInput.value = today;
+} else {
+  alert("❌ Submission error: " + resp.message);
+  console.error(resp);
+}
+
+// Close popup when user clicks X
+closePopup.onclick = function() {
+  successPopup.style.display = "none";
+}
+
+// Optional: Close popup when clicking outside
+window.onclick = function(event) {
+  if(event.target == successPopup){
+    successPopup.style.display = "none";
+  }
+}
+
       form.reset();
       // Reset date fields to today
       dateInput.value = today;
@@ -106,6 +133,7 @@ form.addEventListener("submit", async function(e) {
   });
 
 });
+
 
 
 
