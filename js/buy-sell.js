@@ -126,7 +126,9 @@ window.onclick = function(event) {
     successPopup.style.display = "none";
   }
 }
-
+	const submitBtn = form.querySelector(".submit-btn");
+	  submitBtn.disabled = false;
+	  submitBtn.style.opacity = 1; // optional visual feedback
       form.reset();
       // Reset date fields to today
       dateInput.value = today;
