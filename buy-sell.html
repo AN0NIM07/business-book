@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy/Sell Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="entry-body">
+
+<!-- Back to Home button -->
+<a href="index.html" class="back-btn">← Home</a>
+
+
+  <div class="app-header">
+    <h2>🛒 Buy / Sell Entry</h2>
+    <p>Fill all required details</p>
+  </div>
+
+  <form id="entryForm" class="entry-form">
+
+    <!-- Row: Date & Action -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>📅 Date</label>
+        <input type="date" id="date" required>
+      </div>
+      <div class="form-group">
+        <label>⚡ Action</label>
+        <select id="action" required>
+          <option value="">Select</option>
+          <option>BUY</option>
+          <option>SELL</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Company Name -->
+    <div class="form-group">
+      <label>🏢 Company Name</label>
+      <input type="text" id="company" required>
+    </div>
+
+    <!-- Row: Product Type & Product -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>📦 Product Type</label>
+        <select id="productType">
+          <option>D/O</option>
+          <option>Slip</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>📝 Product</label>
+        <input type="text" id="product">
+      </div>
+    </div>
+
+    <!-- Row: Weight & Price -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>⚖️ Weight</label>
+        <input type="text" id="weight">
+      </div>
+      <div class="form-group">
+        <label>💲 Price</label>
+        <input type="number" id="price">
+      </div>
+    </div>
+
+    <!-- Row: CQ Date & Broker -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>📅 CQ Date</label>
+        <input type="date" id="cqDate">
+      </div>
+      <div class="form-group">
+        <label>🤝 Broker</label>
+        <input type="text" id="broker">
+      </div>
+    </div>
+
+    <!-- Row: Brokeri Bill & Photo -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>🧾 Brokeri Bill</label>
+        <input type="number" id="brokeri">
+      </div>
+      <div class="form-group">
+        <label>📷 Mamo Pic</label>
+        <input type="file" id="photo" accept="image/*">
+      </div>
+    </div>
+
+    <!-- Other Details -->
+    <div class="form-group">
+      <label>📝 Other Details</label>
+      <textarea id="details"></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="submit-btn">SUBMIT</button>
+
+  </form>
+
+
+  <!-- Success Popup -->
+  <div id="successPopup" class="popup">
+    <div class="popup-content">
+      <span id="closePopup" class="close">&times;</span>
+      <h3>✅ Success!</h3>
+      <p>Data submitted successfully.</p>
+    </div>
+  </div>
+  
+ 
+
+  <script src="js/buy-sell.js"></script>
+</body>
+</html>
