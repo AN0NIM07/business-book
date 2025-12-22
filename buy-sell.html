@@ -6,84 +6,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="entry-body">
 
-<h2>Buy / Sell Entry</h2>
-
-<form id="entryForm">
-
-  <!-- 1. Date -->
-  <label>Date</label>
-  <input type="date" id="date" required>
-
-  <!-- 2. Action -->
-  <label>Action</label>
-  <select id="action" required>
-    <option value="">Select</option>
-    <option>BUY</option>
-    <option>SELL</option>
-  </select>
-
-  <!-- 3. Company Name -->
-  <label>Company Name</label>
-  <input type="text" id="company" required>
-
-  <!-- 4. Product Type -->
-  <label>Product Type</label>
-  <select id="productType">
-    <option>D/O</option>
-    <option>Slip</option>
-  </select>
-
-  <!-- 5. Product -->
-  <label>Product</label>
-  <input type="text" id="product">
-
-  <!-- 6. Weight -->
-  <label>Weight</label>
-  <input type="text" id="weight">
-
-  <!-- 7. Price -->
-  <label>Price</label>
-  <input type="number" id="price">
-
-  <!-- 8. CQ Date -->
-  <label>CQ Date</label>
-  <input type="date" id="cqDate" required>
-
-  <!-- 9. Broker -->
-  <label>Broker</label>
-  <input type="text" id="broker">
-
-  <!-- 10. Brokeri Bill -->
-  <label>Brokeri Bill</label>
-  <input type="number" id="brokeri">
-
-  <!-- 11. Mamo-Pic -->
-  <label>Mamo Pic</label>
-  <input type="file" id="photo" accept="image/*">
-
-  <!-- 12. Other Details -->
-  <label>Other Details</label>
-  <textarea id="details"></textarea>
-
-  <button type="submit">SUBMIT</button>
-
-</form>
-
-<script src="js/buy-sell.js"></script>
-  <!-- Success Popup -->
-<div id="successPopup" class="popup">
-  <div class="popup-content">
-    <span id="closePopup" class="close">&times;</span>
-    <h3>✅ Success!</h3>
-    <p>Data submitted successfully.</p>
+  <div class="app-header">
+    <h2>🛒 Buy / Sell Entry</h2>
+    <p>Fill all required details</p>
   </div>
-</div>
 
+  <form id="entryForm" class="entry-form">
+
+    <!-- Row: Date & Action -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>📅 Date</label>
+        <input type="date" id="date" required>
+      </div>
+      <div class="form-group">
+        <label>⚡ Action</label>
+        <select id="action" required>
+          <option value="">Select</option>
+          <option>BUY</option>
+          <option>SELL</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Company Name -->
+    <div class="form-group">
+      <label>🏢 Company Name</label>
+      <input type="text" id="company" required>
+    </div>
+
+    <!-- Row: Product Type & Product -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>📦 Product Type</label>
+        <select id="productType">
+          <option>D/O</option>
+          <option>Slip</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>📝 Product</label>
+        <input type="text" id="product">
+      </div>
+    </div>
+
+    <!-- Row: Weight & Price -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>⚖️ Weight</label>
+        <input type="text" id="weight">
+      </div>
+      <div class="form-group">
+        <label>💲 Price</label>
+        <input type="number" id="price">
+      </div>
+    </div>
+
+    <!-- Row: CQ Date & Broker -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>📅 CQ Date</label>
+        <input type="date" id="cqDate">
+      </div>
+      <div class="form-group">
+        <label>🤝 Broker</label>
+        <input type="text" id="broker">
+      </div>
+    </div>
+
+    <!-- Row: Brokeri Bill & Photo -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>🧾 Brokeri Bill</label>
+        <input type="number" id="brokeri">
+      </div>
+      <div class="form-group">
+        <label>📷 Mamo Pic</label>
+        <input type="file" id="photo" accept="image/*">
+      </div>
+    </div>
+
+    <!-- Other Details -->
+    <div class="form-group">
+      <label>📝 Other Details</label>
+      <textarea id="details"></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="submit-btn">SUBMIT</button>
+
+  </form>
+
+  <!-- Success Popup -->
+  <div id="successPopup" class="popup">
+    <div class="popup-content">
+      <span id="closePopup" class="close">&times;</span>
+      <h3>✅ Success!</h3>
+      <p>Data submitted successfully.</p>
+    </div>
+  </div>
+
+  <script src="js/buy-sell.js"></script>
 </body>
 </html>
-
-
-
-
