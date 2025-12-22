@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function() {
 // ===============================
 // CONFIG
 // ===============================
@@ -131,3 +132,4 @@ window.onclick = function(event) {
     successPopup.style.display = "none";
   }
 };
+});
