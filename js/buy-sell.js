@@ -1,7 +1,49 @@
+// ===============================
+// CONFIG
+// ===============================
 const scriptURL = "https://script.google.com/macros/s/AKfycbze3eRW5j3DByeBGz2cy8sHZjPGE1ncSp3vslZADXKbeIqmakXbDIpNrRhXkdE46RAE/exec";
 
-document.getElementById("date").valueAsDate = new Date();
+// ===============================
+// DATE HANDLING (DD/MM/YYYY)
+// ===============================
+const dateInput = document.getElementById("date");
+const cqInput = document.getElementById("cqDate");
+const hiddenPicker = document.getElementById("hiddenDatePicker");
 
+let activeInput = null;
+
+// Auto-fill today's date
+setToday(dateInput);
+
+// Open calendar on click
+dateInput.addEventListener("click", () => openPicker(dateInput));
+cqInput.addEventListener("click", () => openPicker(cqInput));
+
+function openPicker(input) {
+  activeInput = input;
+  hiddenPicker.value = ""; // reset
+  hiddenPicker.click();
+}
+
+hiddenPicker.addEventListener("change", function () {
+  if (!activeInput || !this.value) return;
+
+  const d = new Date(this.value);
+  activeInput.value = formatDDMMYYYY(d);
+});
+
+function setToday(input) {
+  const d = new Date();
+  input.value = formatDDMMYYYY(d);
+}
+
+function formatDDMMYYYY(d) {
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+// ===============================
+// FORM SUBMISSION
+// ===============================
 document.getElementById("entryForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -16,14 +58,14 @@ document.getElementById("entryForm").addEventListener("submit", async function(e
   }
 
   const payload = {
-    date: formatDate(date.value),
+    date: dateInput.value,
     action: action.value,
     company: company.value,
     productType: productType.value,
     product: product.value,
     weight: weight.value,
     price: price.value,
-    cqDate: formatDate(cqDate.value),
+    cqDate: cqInput.value,
     broker: broker.value,
     brokeri: brokeri.value,
     otherDetails: details.value,
@@ -37,23 +79,16 @@ document.getElementById("entryForm").addEventListener("submit", async function(e
   })
   .then(res => res.json())
   .then(resp => {
-    alert("Data submitted successfully!");
+    alert("✅ Data submitted successfully!");
     document.getElementById("entryForm").reset();
+    setToday(dateInput);
   })
-  .catch(err => alert("Error submitting data"));
+  .catch(err => {
+    alert("❌ Error submitting data");
+    console.error(err);
+  });
 });
 
-function formatDate(dateStr) {
-  if (!dateStr) return "";
-  const d = new Date(dateStr);
-  return `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
-}
+// ============================
 
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(",")[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+
