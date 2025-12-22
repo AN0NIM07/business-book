@@ -105,4 +105,49 @@ button {
 .menu-card:active {
   transform: scale(0.97);
 }
+/* ===== Success Popup ===== */
+.popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.popup-content {
+  background-color: #fff;
+  margin: 25% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.popup-content h3 {
+  margin: 0 0 10px 0;
+  color: #16a34a;
+}
+
+.popup-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+}
+
 
