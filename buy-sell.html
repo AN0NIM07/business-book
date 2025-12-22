@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>Buy/Sell Entry</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Global styles -->
   <link rel="stylesheet" href="css/style.css">
+  <!-- Buy/Sell page styles -->
   <link rel="stylesheet" href="css/buy-sell.css">
 </head>
 <body class="entry-body">
@@ -20,7 +22,8 @@
 
   <!-- Form -->
   <form id="entryForm" class="entry-form">
-    <!-- All form fields same as previous bundle -->
+
+    <!-- Row: Date & Action -->
     <div class="form-row">
       <div class="form-group">
         <label>📅 Date</label>
@@ -36,11 +39,13 @@
       </div>
     </div>
 
+    <!-- Company Name -->
     <div class="form-group">
       <label>🏢 Company Name</label>
       <input type="text" id="company" required>
     </div>
 
+    <!-- Row: Product Type & Product -->
     <div class="form-row">
       <div class="form-group">
         <label>📦 Product Type</label>
@@ -55,6 +60,7 @@
       </div>
     </div>
 
+    <!-- Row: Weight & Price -->
     <div class="form-row">
       <div class="form-group">
         <label>⚖️ Weight</label>
@@ -66,6 +72,7 @@
       </div>
     </div>
 
+    <!-- Row: CQ Date & Broker -->
     <div class="form-row">
       <div class="form-group">
         <label>📅 CQ Date</label>
@@ -77,6 +84,7 @@
       </div>
     </div>
 
+    <!-- Row: Brokeri Bill & Mamo Pic -->
     <div class="form-row">
       <div class="form-group">
         <label>🧾 Brokeri Bill</label>
@@ -88,11 +96,13 @@
       </div>
     </div>
 
+    <!-- Other Details -->
     <div class="form-group">
       <label>📝 Other Details</label>
       <textarea id="details"></textarea>
     </div>
 
+    <!-- Submit Button -->
     <button type="submit" class="submit-btn">SUBMIT</button>
   </form>
 
@@ -111,6 +121,7 @@
     <p>Submitting...</p>
   </div>
 
+  <!-- JS -->
   <script src="js/buy-sell.js"></script>
 </body>
 </html>
