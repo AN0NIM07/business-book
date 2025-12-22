@@ -172,14 +172,13 @@ textarea {
 /* ===== Loading Overlay ===== */
 /* =============================== */
 .loading-overlay {
-  display: none; /* hidden by default */
+  display: none !important; /* FORCE hidden by default */
   position: fixed;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.5);
   z-index: 10000;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -191,7 +190,6 @@ textarea {
   font-size: 16px;
 }
 
-/* Spinner */
 .spinner {
   border: 5px solid #f3f3f3;
   border-top: 5px solid #2563eb;
@@ -206,6 +204,7 @@ textarea {
   100% { transform: rotate(360deg); }
 }
 
+
 /* =============================== */
 /* ===== Responsive ===== */
 /* =============================== */
@@ -214,3 +213,4 @@ textarea {
     flex-direction: column;
   }
 }
+
