@@ -4,91 +4,109 @@
 const scriptURL = "https://script.google.com/macros/s/AKfycbze3eRW5j3DByeBGz2cy8sHZjPGE1ncSp3vslZADXKbeIqmakXbDIpNrRhXkdE46RAE/exec";
 
 // ===============================
-// DATE HANDLING (DD/MM/YYYY)
+// ELEMENTS
 // ===============================
 const dateInput = document.getElementById("date");
 const cqInput = document.getElementById("cqDate");
-const hiddenPicker = document.getElementById("hiddenDatePicker");
+const form = document.getElementById("entryForm");
+const fileInput = document.getElementById("photo");
 
-let activeInput = null;
+// Other fields
+const actionInput = document.getElementById("action");
+const companyInput = document.getElementById("company");
+const productTypeInput = document.getElementById("productType");
+const productInput = document.getElementById("product");
+const weightInput = document.getElementById("weight");
+const priceInput = document.getElementById("price");
+const brokerInput = document.getElementById("broker");
+const brokeriInput = document.getElementById("brokeri");
+const detailsInput = document.getElementById("details");
 
-// Auto-fill today's date
-setToday(dateInput);
+// ===============================
+// AUTO-FILL TODAY DATE
+// ===============================
+const today = new Date().toISOString().split('T')[0];
+dateInput.value = today;
+cqInput.value = today;
 
-// Open calendar on click
-dateInput.addEventListener("click", () => openPicker(dateInput));
-cqInput.addEventListener("click", () => openPicker(cqInput));
-
-function openPicker(input) {
-  activeInput = input;
-  hiddenPicker.value = ""; // reset
-  hiddenPicker.click();
-}
-
-hiddenPicker.addEventListener("change", function () {
-  if (!activeInput || !this.value) return;
-
-  const d = new Date(this.value);
-  activeInput.value = formatDDMMYYYY(d);
-});
-
-function setToday(input) {
-  const d = new Date();
-  input.value = formatDDMMYYYY(d);
-}
-
-function formatDDMMYYYY(d) {
+// ===============================
+// HELPER: Convert YYYY-MM-DD → DD/MM/YYYY
+// ===============================
+function convertToDDMMYYYY(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
   return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+// ===============================
+// IMAGE → BASE64
+// ===============================
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 // ===============================
 // FORM SUBMISSION
 // ===============================
-document.getElementById("entryForm").addEventListener("submit", async function(e) {
+form.addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  const fileInput = document.getElementById("photo");
+  // Handle image if uploaded
   let imageBase64 = "";
   let imageType = "";
-
   if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
     imageType = file.type;
     imageBase64 = await toBase64(file);
   }
 
+  // Prepare payload
   const payload = {
-    date: dateInput.value,
-    action: action.value,
-    company: company.value,
-    productType: productType.value,
-    product: product.value,
-    weight: weight.value,
-    price: price.value,
-    cqDate: cqInput.value,
-    broker: broker.value,
-    brokeri: brokeri.value,
-    otherDetails: details.value,
+    date: convertToDDMMYYYY(dateInput.value),
+    action: actionInput.value,
+    company: companyInput.value,
+    productType: productTypeInput.value,
+    product: productInput.value,
+    weight: weightInput.value,
+    price: priceInput.value,
+    cqDate: convertToDDMMYYYY(cqInput.value),
+    broker: brokerInput.value,
+    brokeri: brokeriInput.value,
+    otherDetails: detailsInput.value,
     image: imageBase64,
     imageType: imageType
   };
 
+  // Send data to Google Apps Script
   fetch(scriptURL, {
     method: "POST",
     body: JSON.stringify(payload)
   })
   .then(res => res.json())
   .then(resp => {
-    alert("✅ Data submitted successfully!");
-    document.getElementById("entryForm").reset();
-    setToday(dateInput);
+    if(resp.status === "success") {
+      alert("✅ Data submitted successfully!");
+      form.reset();
+      // Reset date fields to today
+      dateInput.value = today;
+      cqInput.value = today;
+    } else {
+      alert("❌ Submission error: " + resp.message);
+      console.error(resp);
+    }
   })
   .catch(err => {
-    alert("❌ Error submitting data");
+    alert("❌ Error submitting data. See console for details.");
     console.error(err);
   });
+
 });
 
-// ============================
+
 
 
