@@ -2,7 +2,7 @@
 // CONFIG
 // ===============================
 const loadingOverlay = document.getElementById("loadingOverlay");
-const scriptURL = "https://script.google.com/macros/s/AKfycbze3eRW5j3DByeBGz2cy8sHZjPGE1ncSp3vslZADXKbeIqmakXbDIpNrRhXkdE46RAE/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycby7cL6xEwEUHhBoeHNmrbYJetsxxUSSuVPuphEjI75aA8CmpXyG91_1XLlYaBSgoxa8/exec";
 
 // ===============================
 // ELEMENTS
@@ -19,6 +19,7 @@ const productTypeInput = document.getElementById("productType");
 const productInput = document.getElementById("product");
 const weightInput = document.getElementById("weight");
 const priceInput = document.getElementById("price");
+const paymentInput = document.getElementById("payment");
 const brokerInput = document.getElementById("broker");
 const brokeriInput = document.getElementById("brokeri");
 const detailsInput = document.getElementById("details");
@@ -87,6 +88,7 @@ form.addEventListener("submit", async function(e) {
     broker: brokerInput.value,
     brokeri: brokeriInput.value,
     otherDetails: detailsInput.value,
+	payment: paymentInput.value,
     image: imageBase64,
     imageType: imageType
   };
