@@ -56,6 +56,12 @@ body {
   font-weight: bold;
 }
 
+.record-header span {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spacing between badge, image, ID icon */
+}
+
 .badge {
   padding: 4px 10px;
   border-radius: 20px;
@@ -66,9 +72,8 @@ body {
 .badge.buy { background: #16a34a; }
 .badge.sell { background: #dc2626; }
 
-.image-icon {
+.image-icon, .copy-id-icon {
   font-size: 22px;
-  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -76,12 +81,6 @@ body {
 .record-row {
   font-size: 14px;
   margin-bottom: 6px;
-}
-
-/* Loading */
-.loading-text {
-  text-align: center;
-  color: #555;
 }
 
 /* Image Popup */
@@ -111,4 +110,18 @@ body {
   font-size: 32px;
   color: white;
   cursor: pointer;
+}
+
+/* Filter Icon */
+.filter-btn {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+.filter-btn:hover {
+  color: #fcd34d; /* optional hover color */
 }
