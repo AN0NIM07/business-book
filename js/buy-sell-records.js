@@ -1,9 +1,6 @@
 const scriptURL = "https://script.google.com/macros/s/AKfycbxGMoefx5yf_gZ5CW49_uSF-WUHtvY2505ONQDI9kp3OvinqCKT--hPvjnQuA3BQwwj/exec";
 
 const container = document.getElementById("recordsContainer");
-const imagePopup = document.getElementById("imagePopup");
-const popupImage = document.getElementById("popupImage");
-const closePopup = document.getElementById("closeImagePopup");
 
 fetch(scriptURL)
   .then(res => res.json())
@@ -21,18 +18,21 @@ fetch(scriptURL)
       const card = document.createElement("div");
       card.className = "record-card";
 
+      // Image icon
       const imageIcon = row.mamoLink
         ? `<span class="image-icon" data-img="${row.mamoLink}">📷</span>`
         : "";
+
+      // Copy ID icon
+      const copyIdIcon = `<span class="copy-id-icon" data-id="${row.id}" title="Copy ID">🆔</span>`;
 
       card.innerHTML = `
         <div class="record-header">
           <span>📅 ${row.date}</span>
           <span>
-            <span class="badge ${row.action === "BUY" ? "buy" : "sell"}">
-              ${row.action}
-            </span>
+            <span class="badge ${row.action === "BUY" ? "buy" : "sell"}">${row.action}</span>
             ${imageIcon}
+            ${copyIdIcon}
           </span>
         </div>
 
@@ -52,9 +52,18 @@ fetch(scriptURL)
     // Image click
     document.querySelectorAll(".image-icon").forEach(icon => {
       icon.addEventListener("click", () => {
-  window.open(icon.dataset.img, "_blank");
-});
+        window.open(icon.dataset.img, "_blank");
+      });
+    });
 
+    // Copy ID click
+    document.querySelectorAll(".copy-id-icon").forEach(icon => {
+      icon.addEventListener("click", () => {
+        const id = icon.dataset.id;
+        navigator.clipboard.writeText(id).then(() => {
+          alert("Copied ID: " + id);
+        });
+      });
     });
 
   })
@@ -62,9 +71,3 @@ fetch(scriptURL)
     console.error(err);
     container.innerHTML = "<p>Error loading data</p>";
   });
-
-// Close popup
-closePopup.onclick = () => imagePopup.style.display = "none";
-imagePopup.onclick = e => {
-  if (e.target === imagePopup) imagePopup.style.display = "none";
-};
