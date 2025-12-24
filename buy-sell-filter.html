@@ -11,23 +11,23 @@
 
   <!-- Header -->
   <div class="app-header">
-    <a href="buy-sell-records.html" class="back-btn">⬅ Records</a>
-    <h2>🔍 Filter Buy-Sell Records</h2>
+    <a href="buy-sell-records.html" class="back-btn">⬅ Back</a>
+    <h2>📑 Buy-Sell Filter</h2>
     <p>Filter by CQ-Date</p>
   </div>
 
-  <!-- Filter Controls -->
-  <div class="filter-header">
-    <input type="date" id="cqDateFilter">
-    <button id="applyFilterBtn">Filter</button>
-    <button id="copyAllBtn">Copy All</button>
+  <!-- Filter Inputs -->
+  <div class="filter-container">
+    <input type="date" id="cqDateFilter" />
+    <button id="applyFilterBtn">Apply Filter</button>
+    <button id="copyAllBtn" class="copy-all-btn">Copy All</button>
   </div>
 
   <!-- Records -->
   <div id="recordsContainer" class="records-container">
-    <p class="loading-text">Loading records...</p>
+    <p class="no-data">Loading records...</p>
   </div>
 
+  <script src="js/buy-sell-filter.js"></script>
 </body>
-<script src="js/buy-sell-filter.js"></script>
 </html>
