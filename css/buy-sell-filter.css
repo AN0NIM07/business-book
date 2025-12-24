@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f5f7;
+}
+
+/* Header */
+.app-header {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 20px 15px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+  position: relative;
+}
+
+.app-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.app-header p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.back-btn {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+/* Filter Controls */
+.filter-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 15px;
+  background: #f0f4f8;
+  border-bottom: 1px solid #ccc;
+}
+
+.filter-header input,
+.filter-header button {
+  flex: 1 1 auto;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background: white;
+  cursor: pointer;
+}
+
+.filter-header button:hover {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Records container */
+.records-container {
+  padding: 15px;
+}
+
+/* Group Header (CQ-Date + Product) */
+.group-header {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 12px 0 4px;
+  color: #333;
+  padding: 4px 8px;
+  background: #e2e8f0;
+  border-radius: 6px;
+}
+
+/* BUY/SELL Headers */
+.record-action-header {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 8px 0 4px;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.record-action-header.buy { background-color: #16a34a; }
+.record-action-header.sell { background-color: #dc2626; }
+
+/* One-line per record */
+.record-row {
+  font-size: 14px;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.record-row span {
+  white-space: nowrap;
+}
