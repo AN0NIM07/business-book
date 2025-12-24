@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy-Sell Filter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/buy-sell-filter.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <div class="app-header">
+    <a href="buy-sell-records.html" class="back-btn">⬅ Records</a>
+    <h2>🔍 Filter Buy-Sell Records</h2>
+    <p>Filter by CQ-Date</p>
+  </div>
+
+  <!-- Filter Controls -->
+  <div class="filter-header">
+    <input type="date" id="cqDateFilter">
+    <button id="applyFilterBtn">Filter</button>
+    <button id="copyAllBtn">Copy All</button>
+  </div>
+
+  <!-- Records -->
+  <div id="recordsContainer" class="records-container">
+    <p class="loading-text">Loading records...</p>
+  </div>
+
+</body>
+<script src="js/buy-sell-filter.js"></script>
+</html>
