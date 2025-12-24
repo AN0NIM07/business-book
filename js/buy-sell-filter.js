@@ -58,6 +58,7 @@ function displayRecords(data) {
         const card = document.createElement("div");
         card.className = "record-row";
 
+        // Include Payment in display
         card.innerHTML = `
           <span>${row.company}</span>
           <span>${row.weight}</span>
@@ -90,7 +91,7 @@ applyFilterBtn.addEventListener("click", () => {
   displayRecords(filtered);
 });
 
-// Copy All Button - one line per record
+// Copy All Button - one line per record, exclude Payment
 copyAllBtn.addEventListener("click", () => {
   let text = "";
   const containerChildren = container.children;
@@ -103,12 +104,14 @@ copyAllBtn.addEventListener("click", () => {
     } 
     else if(el.classList.contains("record-row")) {
       const spans = Array.from(el.querySelectorAll("span"));
-      const line = spans.map(s => s.innerText).join(" "); // join all fields with space
+
+      // Exclude last span (Payment) when copying
+      const line = spans.slice(0, spans.length - 1).map(s => s.innerText).join(" ");
       text += line + "\n";
     }
   }
 
   navigator.clipboard.writeText(text).then(() => {
-    alert("All filtered data copied!");
+    alert("All filtered data copied (Payment excluded)!");
   });
 });
