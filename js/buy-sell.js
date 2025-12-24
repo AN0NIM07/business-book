@@ -2,7 +2,7 @@
 // CONFIG
 // ===============================
 const loadingOverlay = document.getElementById("loadingOverlay");
-const scriptURL = "https://script.google.com/macros/s/AKfycbydAYSxaobAi6LWq54_CtmakkHcuX4q2palpxfY62819yDXm4crfGvWAEmdVHZ9cny7/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxGMoefx5yf_gZ5CW49_uSF-WUHtvY2505ONQDI9kp3OvinqCKT--hPvjnQuA3BQwwj/exec";
 
 // ===============================
 // ELEMENTS
