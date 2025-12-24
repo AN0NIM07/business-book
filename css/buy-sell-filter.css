@@ -34,31 +34,37 @@ body {
   font-weight: bold;
 }
 
-/* Filter Controls */
-.filter-header {
+/* Filter container */
+.filter-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 15px;
-  background: #f0f4f8;
-  border-bottom: 1px solid #ccc;
+  background: #fff;
+  border-radius: 10px;
+  margin: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  gap: 10px;
 }
 
-.filter-header input,
-.filter-header button {
-  flex: 1 1 auto;
-  padding: 8px 10px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-  background: white;
+.filter-container input[type="date"] {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1;
+}
+
+.filter-container button {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: #2563eb;
+  color: white;
   cursor: pointer;
 }
 
-.filter-header button:hover {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
+.filter-container button:hover {
+  background-color: #1e40af;
 }
 
 /* Records container */
@@ -70,41 +76,82 @@ body {
 .group-header {
   font-weight: bold;
   font-size: 16px;
-  margin: 12px 0 4px;
+  margin-top: 20px;
+  margin-bottom: 6px;
   color: #333;
-  padding: 4px 8px;
-  background: #e2e8f0;
-  border-radius: 6px;
 }
 
-/* BUY/SELL Headers */
+/* BUY/SELL Header */
 .record-action-header {
   font-weight: bold;
-  font-size: 16px;
-  margin: 8px 0 4px;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 8px;
-}
-
-.record-action-header.buy { background-color: #16a34a; }
-.record-action-header.sell { background-color: #dc2626; }
-
-/* One-line per record */
-.record-row {
   font-size: 14px;
   margin-bottom: 6px;
-  padding: 8px 10px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
+  padding-left: 10px;
 }
 
+.record-action-header.buy {
+  color: #16a34a;
+}
+
+.record-action-header.sell {
+  color: #dc2626;
+}
+
+/* Record row - one line */
+.record-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Each span in record row */
 .record-row span {
   white-space: nowrap;
+}
+
+/* Copy All button */
+.copy-all-btn {
+  display: block;
+  margin: 15px auto;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.copy-all-btn:hover {
+  background-color: #1e40af;
+}
+
+/* No data message */
+.no-data {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+  font-style: italic;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .record-row {
+    gap: 6px;
+  }
+
+  .record-row span {
+    font-size: 13px;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-container input, .filter-container button {
+    width: 100%;
+  }
 }
