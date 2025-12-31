@@ -34,6 +34,21 @@ body {
   font-weight: bold;
 }
 
+/* Filter Icon */
+.filter-btn {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  color: #fcd34d;
+}
+
 /* Records container */
 .records-container {
   padding: 15px;
@@ -59,9 +74,10 @@ body {
 .record-header span {
   display: flex;
   align-items: center;
-  gap: 8px; /* spacing between badge, image, ID icon */
+  gap: 8px;
 }
 
+/* BUY / SELL badge */
 .badge {
   padding: 4px 10px;
   border-radius: 20px;
@@ -69,12 +85,22 @@ body {
   color: white;
 }
 
-.badge.buy { background: #16a34a; }
-.badge.sell { background: #dc2626; }
+.badge.buy {
+  background: #16a34a;
+}
 
-.image-icon, .copy-id-icon {
+.badge.sell {
+  background: #dc2626;
+}
+
+/* Icons */
+.image-icon,
+.copy-id-icon,
+.copy-record-icon,
+.edit-icon,
+.delete-icon {
   font-size: 22px;
-  cursor: pointer;
+  cursor: pointer; /* ✅ FIX: Hand cursor everywhere */
 }
 
 /* Record rows */
@@ -110,18 +136,4 @@ body {
   font-size: 32px;
   color: white;
   cursor: pointer;
-}
-
-/* Filter Icon */
-.filter-btn {
-  position: absolute;
-  right: 15px;
-  top: 20px;
-  font-size: 24px;
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
-}
-.filter-btn:hover {
-  color: #fcd34d; /* optional hover color */
 }
