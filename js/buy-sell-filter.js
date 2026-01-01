@@ -7,11 +7,13 @@ const copyAllBtn = document.getElementById("copyAllBtn");
 
 let allData = [];
 
-// Fetch all records
+// ===============================
+// FETCH ALL RECORDS
+// ===============================
 fetch(scriptURL)
   .then(res => res.json())
   .then(data => {
-    allData = data.reverse();
+    allData = data.reverse(); // latest first
     displayRecords(allData);
   })
   .catch(err => {
@@ -19,7 +21,9 @@ fetch(scriptURL)
     container.innerHTML = "<p>Error loading data</p>";
   });
 
-// Display records grouped by CQ-Date and Product
+// ===============================
+// DISPLAY RECORDS (GROUPED & SORTED)
+// ===============================
 function displayRecords(data) {
   container.innerHTML = "";
 
@@ -49,16 +53,22 @@ function displayRecords(data) {
       const actionData = groupRows.filter(r => r.action === action);
       if (actionData.length === 0) return;
 
+      // ✅ SORT BY COMPANY NAME (A → Z)
+      actionData.sort((a, b) =>
+        a.company.localeCompare(b.company, undefined, { sensitivity: "base" })
+      );
+
+      // Action Header
       const actionHeader = document.createElement("div");
       actionHeader.className = `record-action-header ${action.toLowerCase()}`;
       actionHeader.innerText = action;
       container.appendChild(actionHeader);
 
+      // Records
       actionData.forEach(row => {
         const card = document.createElement("div");
         card.className = "record-row";
 
-        // Include Payment in display
         card.innerHTML = `
           <span>${row.company}</span>
           <span>${row.weight}</span>
@@ -73,17 +83,19 @@ function displayRecords(data) {
   });
 }
 
-// Filter Button
+// ===============================
+// APPLY FILTER (CQ DATE)
+// ===============================
 applyFilterBtn.addEventListener("click", () => {
   const filterDate = cqDateFilter.value; // YYYY-MM-DD
   if (!filterDate) return displayRecords(allData);
 
   const [year, month, day] = filterDate.split("-");
-  const filterStr = `${day}-${month}-${year}`; // DD-MM-YYYY string
+  const filterStr = `${day}-${month}-${year}`; // DD-MM-YYYY
 
   const filtered = allData.filter(r => r.cqDate === filterStr);
 
-  if(filtered.length === 0) {
+  if (filtered.length === 0) {
     container.innerHTML = "<p>No records found for this CQ-Date.</p>";
     return;
   }
@@ -91,7 +103,9 @@ applyFilterBtn.addEventListener("click", () => {
   displayRecords(filtered);
 });
 
-// Copy All Button - one line per record, exclude Payment
+// ===============================
+// COPY ALL (EXCLUDING PAYMENT)
+// ===============================
 copyAllBtn.addEventListener("click", () => {
   let text = "";
   const containerChildren = container.children;
@@ -99,14 +113,21 @@ copyAllBtn.addEventListener("click", () => {
   for (let i = 0; i < containerChildren.length; i++) {
     const el = containerChildren[i];
 
-    if(el.classList.contains("group-header") || el.classList.contains("record-action-header")) {
+    if (
+      el.classList.contains("group-header") ||
+      el.classList.contains("record-action-header")
+    ) {
       text += el.innerText + "\n";
     } 
-    else if(el.classList.contains("record-row")) {
+    else if (el.classList.contains("record-row")) {
       const spans = Array.from(el.querySelectorAll("span"));
 
-      // Exclude last span (Payment) when copying
-      const line = spans.slice(0, spans.length - 1).map(s => s.innerText).join(" ");
+      // Exclude last span (Payment)
+      const line = spans
+        .slice(0, spans.length - 1)
+        .map(s => s.innerText)
+        .join(" ");
+
       text += line + "\n";
     }
   }
