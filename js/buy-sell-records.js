@@ -1,12 +1,12 @@
 const scriptURL = "https://script.google.com/macros/s/AKfycbxGMoefx5yf_gZ5CW49_uSF-WUHtvY2505ONQDI9kp3OvinqCKT--hPvjnQuA3BQwwj/exec";
-
 const container = document.getElementById("recordsContainer");
+
+let recordMap = {};
 
 // ===============================
 // FORMAT RECORD FOR COPY
 // ===============================
 function formatRecordForCopy(row) {
-  // Convert DD-MM-YYYY → DD/MM/YYYY
   const formattedDate = row.date.replaceAll("-", "/");
 
   let text = "";
@@ -17,7 +17,7 @@ function formatRecordForCopy(row) {
   text += `Pay: ${row.cqDate}\n`;
   text += `B: ${row.broker}\n`;
 
-  if (row.otherDetails && row.otherDetails.trim() !== "") {
+  if (row.otherDetails?.trim()) {
     text += row.otherDetails;
   }
 
@@ -32,7 +32,6 @@ fetch(scriptURL)
   .then(data => {
 
     container.innerHTML = "";
-
     if (!data || data.length === 0) {
       container.innerHTML = "<p>No records found.</p>";
       return;
@@ -41,20 +40,15 @@ fetch(scriptURL)
     const reversedData = data.reverse();
 
     reversedData.forEach(row => {
+      recordMap[row.id] = row;
 
       const card = document.createElement("div");
       card.className = "record-card";
+      card.dataset.id = row.id;
 
-      // Image icon
       const imageIcon = row.mamoLink
-        ? `<span class="image-icon" data-img="${row.mamoLink}" title="View Image">📷</span>`
+        ? `<span class="image-icon" data-img="${row.mamoLink}">📷</span>`
         : "";
-
-      // Copy ID icon
-      const copyIdIcon = `<span class="copy-id-icon" data-id="${row.id}" title="Copy ID">🆔</span>`;
-
-      // Copy Record icon
-      const copyRecordIcon = `<span class="copy-record-icon" title="Copy Record">📋</span>`;
 
       card.innerHTML = `
         <div class="record-header">
@@ -62,8 +56,8 @@ fetch(scriptURL)
           <span>
             <span class="badge ${row.action === "BUY" ? "buy" : "sell"}">${row.action}</span>
             ${imageIcon}
-            ${copyIdIcon}
-            ${copyRecordIcon}
+            <span class="copy-id-icon" data-id="${row.id}">🆔</span>
+            <span class="copy-record-icon" data-id="${row.id}">📋</span>
           </span>
         </div>
 
@@ -80,40 +74,24 @@ fetch(scriptURL)
       container.appendChild(card);
     });
 
-    // ===============================
-    // IMAGE CLICK
-    // ===============================
+    // IMAGE VIEW
     document.querySelectorAll(".image-icon").forEach(icon => {
-      icon.addEventListener("click", () => {
-        window.open(icon.dataset.img, "_blank");
-      });
+      icon.onclick = () => window.open(icon.dataset.img, "_blank");
     });
 
-    // ===============================
-    // COPY ID CLICK
-    // ===============================
+    // COPY ID
     document.querySelectorAll(".copy-id-icon").forEach(icon => {
-      icon.addEventListener("click", () => {
-        const id = icon.dataset.id;
-        navigator.clipboard.writeText(id).then(() => {
-          alert("Copied ID: " + id);
-        });
-      });
+      icon.onclick = () => navigator.clipboard.writeText(icon.dataset.id);
     });
 
-    // ===============================
-    // COPY RECORD CLICK
-    // ===============================
-    document.querySelectorAll(".copy-record-icon").forEach((icon, index) => {
-      icon.addEventListener("click", () => {
-        const row = reversedData[index];
-        const text = formatRecordForCopy(row);
-
-        navigator.clipboard.writeText(text).then(() => {
-          icon.innerText = "✅";
-          setTimeout(() => icon.innerText = "📋", 800);
-        });
-      });
+    // COPY RECORD
+    document.querySelectorAll(".copy-record-icon").forEach(icon => {
+      icon.onclick = () => {
+        const row = recordMap[icon.dataset.id];
+        navigator.clipboard.writeText(formatRecordForCopy(row));
+        icon.innerText = "✅";
+        setTimeout(() => icon.innerText = "📋", 800);
+      };
     });
 
   })
