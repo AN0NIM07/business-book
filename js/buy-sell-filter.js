@@ -67,10 +67,10 @@ function displayRecords(data) {
       // Records
       actionData.forEach(row => {
         const card = document.createElement("div");
-        card.className = "record-row";
+        card.className = `record-row ${action.toLowerCase()}`;
 
         card.innerHTML = `
-          <span>● ${row.company}</span>
+          <span>${row.company}</span>
           <span>${row.weight}</span>
           <span>${row.price}</span>
           <span>B: ${row.broker}</span>
