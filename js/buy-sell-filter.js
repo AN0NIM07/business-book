@@ -69,8 +69,8 @@ function displayRecords(data) {
         const card = document.createElement("div");
         card.className = "record-row";
 
-        card.innerHTML = `●
-          ${row.company}
+        card.innerHTML = `
+          <span>● ${row.company}</span>
           <span>${row.weight}</span>
           <span>${row.price}</span>
           <span>B: ${row.broker}</span>
