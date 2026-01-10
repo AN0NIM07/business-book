@@ -58,11 +58,14 @@ function displayRecords(data) {
         a.company.localeCompare(b.company, undefined, { sensitivity: "base" })
       );
 
-      // Action Header
-      const actionHeader = document.createElement("div");
-      actionHeader.className = `record-action-header ${action.toLowerCase()}`;
-      actionHeader.innerText = action;
-      container.appendChild(actionHeader);
+      // Action Header with count
+		const actionHeader = document.createElement("div");
+		actionHeader.className = `record-action-header ${action.toLowerCase()}`;
+		actionHeader.innerHTML = `
+		  <span class="action-title">${action}</span>
+		  <span class="action-count">(${actionData.length})</span>
+		`;
+		container.appendChild(actionHeader);
 
       // Records
       actionData.forEach(row => {
