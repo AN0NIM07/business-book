@@ -155,3 +155,29 @@ body {
     width: 100%;
   }
 }
+
+/* ===== New Transaction Indicator ===== */
+.record-row {
+  position: relative;
+  padding-left: 14px; /* space for dot */
+}
+
+/* Dot before each record */
+.record-row::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Color based on action */
+.record-row.buy::before {
+  color: #16a34a; /* green */
+}
+
+.record-row.sell::before {
+  color: #dc2626; /* red */
+}
+
