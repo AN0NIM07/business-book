@@ -74,6 +74,7 @@ h1, h2 {
 .orange { background: #ea580c; }
 .purple { background: #7c3aed; }
 .teal { background: #0891b2; }
+.slate { background: #475569; }
 
 /* Tap effect */
 .menu-card:active {
