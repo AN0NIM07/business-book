@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let allData = [];
 
+  // ===============================
+  // Helper: convert DD/MM/YYYY → Date object
+  // ===============================
   function parseDate(str) {
     if (!str || str === "N/A") return null;
     const parts = str.split("/");
@@ -14,12 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return new Date(year, month - 1, day);
   }
 
-  // Fetch all records
+  // ===============================
+  // FETCH ALL RECORDS
+  // ===============================
   async function fetchData() {
     try {
       const res = await fetch(scriptURL);
       const data = await res.json();
-      allData = data.reverse();
+      allData = data.reverse(); // latest first
       displayRecords(allData);
     } catch (err) {
       console.error(err);
@@ -29,6 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchData();
 
+  // ===============================
+  // DISPLAY RECORDS (GROUPED & SORTED)
+  // ===============================
   function displayRecords(data) {
     if (!recordsContainer) return;
     recordsContainer.innerHTML = "";
@@ -44,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const unpaidFuture = data.filter(r => (!r.ACTION || r.ACTION === "N/A") && parseDate(r["CQ-DATE"]) && parseDate(r["CQ-DATE"]) > today);
     const paid = data.filter(r => r.ACTION === "PAID");
 
+    // Sort by broker name
     unpaidClose.sort((a,b) => a.BROKER.localeCompare(b.BROKER));
     unpaidFuture.sort((a,b) => a.BROKER.localeCompare(b.BROKER));
     paid.sort((a,b) => a.BROKER.localeCompare(b.BROKER));
@@ -53,6 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (paid.length) renderGroup("Paid", paid, "paid");
   }
 
+  // ===============================
+  // RENDER GROUP
+  // ===============================
   function renderGroup(title, rows, type) {
     const groupDiv = document.createElement("div");
 
@@ -66,13 +78,22 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = `record-card ${type === "paid" ? "paid-card" : ""}`;
       card.dataset.id = row.ID;
 
+      // Record info with first and second line
       const infoDiv = document.createElement("div");
       infoDiv.className = "record-info";
-      infoDiv.innerHTML = `
-        <strong>${row.BROKER}</strong> | CQ: ${row["CQ-DATE"]} | ৳${row.AMOUNT} <br>
-        <span class="details">${row.DETAILS}</span>
-      `;
 
+      const firstLine = document.createElement("div");
+      firstLine.className = "record-main";
+      firstLine.innerHTML = `<strong>${row.BROKER}</strong> | CQ: ${row["CQ-DATE"]} | <span class="amount">৳${row.AMOUNT}</span>`;
+
+      const secondLine = document.createElement("div");
+      secondLine.className = "record-details";
+      secondLine.innerText = row.DETAILS;
+
+      infoDiv.appendChild(firstLine);
+      infoDiv.appendChild(secondLine);
+
+      // Checkbox
       const checkBox = document.createElement("input");
       checkBox.type = "checkbox";
       checkBox.className = "pay-checkbox";
@@ -86,7 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
     recordsContainer.appendChild(groupDiv);
   }
 
-  // PAY button
+  // ===============================
+  // PAY BUTTON CLICK
+  // ===============================
   if (payBtn) {
     payBtn.addEventListener("click", async () => {
       const checkboxes = document.querySelectorAll(".pay-checkbox:checked");
