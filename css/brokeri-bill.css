@@ -2,8 +2,8 @@
 body {
   font-family: Arial, sans-serif;
   background: #f4f5f7;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 /* ===== HEADER ===== */
@@ -44,7 +44,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 10px 15px;
   background: #fff;
   margin: 15px;
@@ -53,27 +53,29 @@ body {
 }
 
 .pay-panel label {
-  flex: 0 0 auto;
+  flex: 1 0 120px;
   font-weight: bold;
+  font-size: 14px;
 }
 
 .pay-panel input[type="date"] {
-  flex: 1 0 auto;
+  flex: 2 0 130px;
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  min-width: 120px;
+  font-size: 14px;
 }
 
 .pay-panel button {
-  flex: 0 0 auto;
-  padding: 8px 12px;
+  flex: 1 0 120px;
+  padding: 8px 10px;
   background-color: #16a34a;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 14px;
 }
 
 .pay-panel button:disabled {
@@ -121,7 +123,7 @@ body {
   color: #16a34a;
 }
 
-/* Individual Record Card */
+/* Individual Brokeri Record */
 .record-card {
   display: flex;
   justify-content: space-between;
@@ -131,6 +133,7 @@ body {
   padding: 12px;
   margin-bottom: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  position: relative;
 }
 
 .record-card.paid-card {
@@ -139,22 +142,32 @@ body {
 
 .record-info {
   flex: 1;
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
 }
 
-.record-info .details {
+.record-info strong {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.record-info span.details {
   font-size: 13px;
   color: #555;
-  margin-top: 4px;
+  margin-top: 2px;
+  line-height: 1.3;
 }
 
 .record-info span.amount {
   font-weight: bold;
   color: #2563eb;
+  margin-top: 2px;
 }
 
+/* Checkbox on right */
 .record-card input[type="checkbox"] {
-  margin-left: auto; /* keep checkbox at right */
+  flex-shrink: 0;
+  margin-left: 10px;
   transform: scale(1.3);
   cursor: pointer;
 }
@@ -167,45 +180,44 @@ body {
   color: #555;
 }
 
-/* ===== MOBILE ADJUSTMENTS ===== */
+/* ================= MOBILE ONLY ================= */
 @media (max-width: 480px) {
-
+  /* Pay panel stacked but compact */
   .pay-panel {
-    flex-wrap: wrap; /* keep elements side-by-side if possible */
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .pay-panel label {
-    flex: 0 0 auto;
+  .pay-panel label, .pay-panel input, .pay-panel button {
+    width: 100%;
+    flex: none;
+    font-size: 14px;
   }
 
-  .pay-panel input[type="date"] {
-    flex: 1 1 auto;
-    min-width: 100px;
-  }
-
-  .pay-panel button {
-    flex: 0 0 auto;
-  }
-
-  /* Record cards: keep checkbox on right */
   .record-card {
-    flex-direction: row;
+    flex-direction: row; /* keep info and checkbox horizontal */
     align-items: center;
   }
 
   .record-info {
-    flex: 1 1 auto;
     margin-right: 10px;
-  }
-
-  .record-info .details {
-    font-size: 13px;
-    color: #555; /* keep details smaller and grey */
   }
 
   .record-card input[type="checkbox"] {
     margin-left: auto;
     margin-top: 0;
+  }
+
+  .record-info span.details {
+    font-size: 12px;
+    color: #555;
+  }
+
+  .record-info strong {
+    font-size: 13px;
+  }
+
+  .record-info span.amount {
+    font-size: 13px;
   }
 }
