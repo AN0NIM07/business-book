@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brokeri Bill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/brokeri-bill.css">
+</head>
+
+<body class="brokeri-body">
+
+  <!-- Header -->
+  <div class="app-header">
+    <a href="index.html" class="back-btn">⬅ Home</a>
+    <h2>🧾 Brokeri Bill</h2>
+    <p>Quick overview of Unpaid & Paid broker payments</p>
+  </div>
+
+  <!-- Pay Panel -->
+  <div class="pay-panel">
+    <label for="payDate">Payment Date:</label>
+    <input type="date" id="payDate">
+    <button id="payBtn">Mark Selected as PAID</button>
+  </div>
+
+  <!-- Records Container -->
+  <div id="recordsContainer" class="records-container">
+    <p class="no-data">Loading brokeri records...</p>
+  </div>
+
+  <script src="js/brokeri-bill.js" defer></script>
+</body>
+</html>
