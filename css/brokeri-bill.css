@@ -62,7 +62,7 @@ body {
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 14px;
-  max-width: 130px; /* shrink the box */
+  max-width: 130px;
 }
 
 .pay-panel button {
@@ -131,7 +131,6 @@ body {
   padding: 12px;
   margin-bottom: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  position: relative;
 }
 
 .record-card.paid-card {
@@ -168,7 +167,7 @@ body {
 .record-card input[type="checkbox"] {
   flex-shrink: 0;
   margin-left: 10px;
-  transform: scale(1.3);
+  transform: scale(1.1);
   cursor: pointer;
 }
 
@@ -182,19 +181,34 @@ body {
 
 /* ================= MOBILE OPTIMIZATION ================= */
 @media (max-width: 480px) {
+
+  /* Pay panel compact */
   .pay-panel {
     flex-direction: column;
     align-items: flex-start;
+    gap: 6px;
+    padding: 10px;
   }
 
-  .pay-panel label, 
-  .pay-panel input[type="date"], 
-  .pay-panel button {
+  .pay-panel label {
+    flex: 0 0 auto;
     width: auto;
-    flex: none;
-    font-size: 14px;
+    margin-bottom: 2px;
   }
 
+  .pay-panel input[type="date"] {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 200px;
+  }
+
+  .pay-panel button {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 6px 12px;
+  }
+
+  /* Keep record cards same style, checkbox right */
   .record-card {
     flex-direction: row;
     align-items: center;
@@ -205,19 +219,20 @@ body {
   }
 
   .record-card input[type="checkbox"] {
-    margin-left: auto; /* keep checkbox on right */
+    margin-left: auto; /* checkbox on right */
     margin-top: 0;
+    transform: scale(1); /* smaller on mobile */
+  }
+
+  .record-main {
+    font-size: 14px;
+  }
+
+  .record-main span.amount {
+    font-size: 14px;
   }
 
   .record-details {
     font-size: 12px;
-  }
-
-  .record-main {
-    font-size: 13px;
-  }
-
-  .record-main span.amount {
-    font-size: 13px;
   }
 }
