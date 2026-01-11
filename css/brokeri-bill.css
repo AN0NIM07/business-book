@@ -73,25 +73,26 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.2s;
 }
 
 .pay-panel button:hover {
   background-color: #15803d;
 }
 
-/* ===== RECORDS CONTAINER ===== */
+/* ===== RECORDS ===== */
 .records-container {
   padding: 15px;
 }
 
-/* Group Header (CQ-Date + Product) */
+/* Group Header */
 .group-header {
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
   margin-bottom: 8px;
   color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
 }
 
 /* Action Header (PAID / UNPAID) */
@@ -114,20 +115,18 @@ body {
   color: #16a34a; /* Green for paid */
 }
 
-/* ===== INDIVIDUAL RECORD CARD ===== */
+/* Individual Record Card */
 .record-card {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
   background: #fff;
   border-radius: 12px;
   padding: 12px;
   margin-bottom: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  position: relative;
 }
 
+/* Record main line: broker + CQ + amount */
 .record-main {
   display: flex;
   align-items: center;
@@ -135,22 +134,19 @@ body {
   font-weight: bold;
 }
 
+/* Checkbox on right */
 .record-main input[type="checkbox"] {
-  margin-left: 8px;
+  margin-left: auto;
   transform: scale(1.2);
   cursor: pointer;
 }
 
-.record-info {
-  flex: 1;
-  margin-right: 10px;
-}
-
+/* Details line */
 .record-details {
   font-size: 13px;
   color: #555;
-  margin-top: 4px;
-  line-height: 1.4;
+  margin-top: 2px;
+  margin-left: 0;
 }
 
 .record-text span.amount {
@@ -178,40 +174,37 @@ body {
   .pay-panel {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
+    padding: 10px;
   }
 
   .pay-panel label {
-    width: 100%;
+    flex: 0 0 auto;
+    width: auto;
+    margin-bottom: 2px;
   }
 
   .pay-panel input[type="date"] {
+    flex: 0 0 auto;
     width: auto;
-    min-width: 150px;
-    max-width: 100%;
+    max-width: 200px;
   }
 
   .pay-panel button {
+    flex: 0 0 auto;
     width: auto;
-    min-width: 120px;
+    padding: 6px 12px;
   }
 
-  /* Record card - keep checkbox on right */
-  .record-card {
-    flex-direction: row;
+  /* Record main line flex wrap */
+  .record-main {
     flex-wrap: wrap;
-    align-items: center;
   }
 
-  .record-info {
-    flex: 1 1 70%;
-    min-width: 0;
-    margin-right: 10px;
-  }
-
+  /* Checkbox stays on right */
   .record-main input[type="checkbox"] {
     margin-left: auto;
-    margin-top: 0;
+    margin-top: 4px;
   }
 
   .record-details {
