@@ -53,19 +53,20 @@ body {
 }
 
 .pay-panel label {
-  flex: 1 0 120px;
+  flex: 0 0 auto;
   font-weight: bold;
 }
 
 .pay-panel input[type="date"] {
-  flex: 2 0 150px;
+  flex: 1 0 auto;
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  min-width: 120px;
 }
 
 .pay-panel button {
-  flex: 1 0 150px;
+  flex: 0 0 auto;
   padding: 8px 12px;
   background-color: #16a34a;
   color: white;
@@ -168,18 +169,26 @@ body {
 
 /* ===== MOBILE ADJUSTMENTS ===== */
 @media (max-width: 480px) {
+
   .pay-panel {
-    flex-direction: column;
-    align-items: stretch;
+    flex-wrap: wrap; /* keep elements side-by-side if possible */
+    justify-content: flex-start;
   }
 
-  .pay-panel label,
-  .pay-panel input,
+  .pay-panel label {
+    flex: 0 0 auto;
+  }
+
+  .pay-panel input[type="date"] {
+    flex: 1 1 auto;
+    min-width: 100px;
+  }
+
   .pay-panel button {
-    width: 100%;
+    flex: 0 0 auto;
   }
 
-  /* Keep record card in row, checkbox at right */
+  /* Record cards: keep checkbox on right */
   .record-card {
     flex-direction: row;
     align-items: center;
