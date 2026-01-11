@@ -75,7 +75,12 @@ body {
   font-weight: bold;
 }
 
-.pay-panel button:hover {
+.pay-panel button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pay-panel button:hover:not(:disabled) {
   background-color: #15803d;
 }
 
@@ -91,11 +96,11 @@ body {
   margin-top: 20px;
   margin-bottom: 8px;
   color: #333;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
   padding-bottom: 4px;
 }
 
-/* Action Header (PAID / UNPAID) */
+/* Action Header */
 .record-action-header {
   font-weight: bold;
   font-size: 14px;
@@ -104,21 +109,22 @@ body {
 }
 
 .record-action-header.unpaid {
-  color: #dc2626; /* Red for unpaid */
+  color: #dc2626;
 }
 
 .record-action-header.unpaid-future {
-  color: #f59e0b; /* Orange for future unpaid */
+  color: #f59e0b;
 }
 
 .record-action-header.paid {
-  color: #16a34a; /* Green for paid */
+  color: #16a34a;
 }
 
 /* Individual Record Card */
 .record-card {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   background: #fff;
   border-radius: 12px;
   padding: 12px;
@@ -126,37 +132,30 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
-/* Record main line: broker + CQ + amount */
-.record-main {
-  display: flex;
-  align-items: center;
+.record-card.paid-card {
+  opacity: 0.6;
+}
+
+.record-info {
+  flex: 1;
   font-size: 14px;
-  font-weight: bold;
 }
 
-/* Checkbox on right */
-.record-main input[type="checkbox"] {
-  margin-left: auto;
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
-/* Details line */
-.record-details {
+.record-info .details {
   font-size: 13px;
   color: #555;
-  margin-top: 2px;
-  margin-left: 0;
+  margin-top: 4px;
 }
 
-.record-text span.amount {
+.record-info span.amount {
   font-weight: bold;
   color: #2563eb;
 }
 
-/* Paid card opacity */
-.paid-card {
-  opacity: 0.6;
+.record-card input[type="checkbox"] {
+  margin-left: 10px;
+  transform: scale(1.3);
+  cursor: pointer;
 }
 
 /* No data message */
@@ -169,46 +168,29 @@ body {
 
 /* ===== MOBILE ADJUSTMENTS ===== */
 @media (max-width: 480px) {
-
-  /* Pay panel compact */
   .pay-panel {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 10px;
+    align-items: stretch;
   }
 
-  .pay-panel label {
-    flex: 0 0 auto;
-    width: auto;
-    margin-bottom: 2px;
-  }
-
-  .pay-panel input[type="date"] {
-    flex: 0 0 auto;
-    width: auto;
-    max-width: 200px;
-  }
-
+  .pay-panel label,
+  .pay-panel input,
   .pay-panel button {
-    flex: 0 0 auto;
-    width: auto;
-    padding: 6px 12px;
+    width: 100%;
   }
 
-  /* Record main line flex wrap */
-  .record-main {
-    flex-wrap: wrap;
+  /* Keep record info & checkbox on same row on mobile */
+  .record-card {
+    flex-direction: row;
+    align-items: center;
   }
 
-  /* Checkbox stays on right */
-  .record-main input[type="checkbox"] {
-    margin-left: auto;
-    margin-top: 4px;
+  .record-info {
+    flex: 1 1 auto;
+    margin-right: 10px;
   }
 
-  .record-details {
+  .record-card input[type="checkbox"] {
     margin-left: 0;
-    margin-top: 2px;
   }
 }
