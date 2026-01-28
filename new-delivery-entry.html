@@ -163,105 +163,133 @@
   </div>
 
   <script>
-    const DELIVERY_API = 'https://script.google.com/macros/s/AKfycbzfTTcEoAx5YAE5tveTQCZa2qFiKIVB3AoIgUyiIeMSv3jTqTie4O0FnDdu0pnJZ0PU/exec';
-    const BUYSELL_API = 'https://script.google.com/macros/s/AKfycbxGMoefx5yf_gZ5CW49_uSF-WUHtvY2505ONQDI9kp3OvinqCKT--hPvjnQuA3BQwwj/exec';
+	const DELIVERY_API = 'https://script.google.com/macros/s/AKfycbwqFyI9MzRGdHnmFNXAjMOp1DPk2AnBdZOLsUHdgBvqbutUGOudbN6NJTFEs36QbJfM/exec';
+	const BUYSELL_API = 'https://script.google.com/macros/s/AKfycbxGMoefx5yf_gZ5CW49_uSF-WUHtvY2505ONQDI9kp3OvinqCKT--hPvjnQuA3BQwwj/exec';
 
-    async function loadBuySellDropdowns() {
-      try {
-        const data = await fetch(BUYSELL_API).then(r => r.json());
-        const buyEntries = data.filter(d => d.action === 'BUY').reverse();
-        const sellEntries = data.filter(d => d.action === 'SELL').reverse();
+	async function loadBuySellDropdowns() {
+	  try {
+		const data = await fetch(BUYSELL_API).then(r => r.json());
+		const buyEntries = data.filter(d => d.action === 'BUY').reverse();
+		const sellEntries = data.filter(d => d.action === 'SELL').reverse();
 
-        const buySelect = document.getElementById('buyId');
-        const sellSelect = document.getElementById('sellId');
+		const buySelect = document.getElementById('buyId');
+		const sellSelect = document.getElementById('sellId');
 
-        buyEntries.forEach(d => {
-          const option = document.createElement('option');
-          option.value = d.id;
-          option.text = `${d.date} | ${d.company} | ${d.productType} | ${d.product} | ${d.weight} | ${d.price} | ${d.cqDate}`;
-          buySelect.add(option);
-        });
+		buyEntries.forEach(d => {
+		  const option = document.createElement('option');
+		  option.value = d.id;
+		  option.text = `${d.date} | ${d.company} | ${d.productType} | ${d.product} | ${d.weight} | ${d.price} | ${d.cqDate}`;
+		  buySelect.add(option);
+		});
 
-        sellEntries.forEach(d => {
-          const option = document.createElement('option');
-          option.value = d.id;
-          option.text = `${d.date} | ${d.company} | ${d.productType} | ${d.product} | ${d.weight} | ${d.price} | ${d.cqDate}`;
-          sellSelect.add(option);
-        });
-      } catch (err) {
-        console.error(err);
-        alert('Error loading Buy-Sell data');
-      }
-    }
+		sellEntries.forEach(d => {
+		  const option = document.createElement('option');
+		  option.value = d.id;
+		  option.text = `${d.date} | ${d.company} | ${d.productType} | ${d.product} | ${d.weight} | ${d.price} | ${d.cqDate}`;
+		  sellSelect.add(option);
+		});
 
-    function fileToBase64(file) {
-      return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.readAsDataURL(file);
-      });
-    }
+	  } catch(err){
+		console.error(err);
+		alert("Failed to load Buy/Sell entries");
+	  }
+	}
 
-    function setupPreview(inputId, previewId) {
-      const input = document.getElementById(inputId);
-      const preview = document.getElementById(previewId);
-      if(!input) return;
-      input.addEventListener('change', e => {
-        const file = e.target.files[0];
-        if (file && preview) preview.src = URL.createObjectURL(file);
-      });
-    }
+	function fileToBase64(file){
+	  return new Promise(resolve=>{
+		const reader = new FileReader();
+		reader.onload = ()=> resolve(reader.result.split(',')[1]);
+		reader.readAsDataURL(file);
+	  });
+	}
 
-    // Setup previews
-    setupPreview('buyDOFile','buyDOPreview');
-    setupPreview('sellDOFile','sellDOPreview');
-    setupPreview('buyRAFile','buyRAPreview');
-    setupPreview('sellRAFile','sellRAPreview');
+	function setupPreview(inputId, previewId){
+	  const input = document.getElementById(inputId);
+	  const preview = document.getElementById(previewId);
+	  if(!input) return;
+	  input.addEventListener('change', e=>{
+		const file = e.target.files[0];
+		if(file && preview) preview.src = URL.createObjectURL(file);
+	  });
+	}
 
-    document.getElementById('deliveryForm').addEventListener('submit', async e => {
-      e.preventDefault();
+	['buyDOFile','sellDOFile','buyRAFile','sellRAFile'].forEach(f=>{
+	  const previewMap = {
+		buyDOFile:'buyDOPreview',
+		sellDOFile:'sellDOPreview',
+		buyRAFile:'buyRAPreview',
+		sellRAFile:'sellRAPreview'
+	  };
+	  setupPreview(f, previewMap[f]);
+	});
 
-      const payload = {
-        buyId: document.getElementById('buyId').value,
-        sellId: document.getElementById('sellId').value,
-        extraDetails: document.getElementById('extraDetails').value
-      };
+	document.getElementById('deliveryForm').addEventListener('submit', async e=>{
+	  e.preventDefault();
+	  
+	  const submitBtn = e.target.querySelector('button[type=submit]');
+	  
+	  // ===== 1️⃣ Check if at least one image is uploaded =====
+	  const files = ['buyDOFile','sellDOFile','buyRAFile','sellRAFile'];
+	  const anyFileSelected = files.some(f=>{
+		const input = document.getElementById(f);
+		return input && input.files.length > 0;
+	  });
+	  if(!anyFileSelected){
+		alert('Please upload at least one slip image before submitting.');
+		return;
+	  }
 
-      const files = ['buyDOFile','sellDOFile','buyRAFile','sellRAFile'];
-      const mapKeys = {
-        buyDOFile: 'buyDO',
-        sellDOFile: 'sellDO',
-        buyRAFile: 'buyRA',
-        sellRAFile: 'sellRA'
-      };
+	  // ===== 2️⃣ Disable button to prevent double click =====
+	  submitBtn.disabled = true;
+	  const originalText = submitBtn.textContent;
+	  submitBtn.textContent = 'Submitting...';
 
-      for (const f of files) {
-        const fileInput = document.getElementById(f);
-        if(fileInput.files[0]) {
-          const key = mapKeys[f];
-          payload[key] = await fileToBase64(fileInput.files[0]);
-          payload[key+'Type'] = fileInput.files[0].type;
-        }
-      }
+	  const payload = {
+		buyId: document.getElementById('buyId').value,
+		sellId: document.getElementById('sellId').value,
+		extraDetails: document.getElementById('extraDetails').value
+	  };
 
-      try {
-        const res = await fetch(DELIVERY_API, {
-          method:'POST',
-          body: JSON.stringify(payload)
-        }).then(r => r.json());
+	  const mapKeys = {
+		buyDOFile:'buyDO',
+		sellDOFile:'sellDO',
+		buyRAFile:'buyRA',
+		sellRAFile:'sellRA'
+	  };
 
-        if(res.status==='success') {
-          alert('Delivery record saved! ID: '+res.id);
-          window.location.reload();
-        } else {
-          alert('Error: '+res.message);
-        }
-      } catch(err) {
-        alert('Submission failed: '+err.message);
-      }
-    });
+	  try{
+		for(const f of files){
+		  const fileInput = document.getElementById(f);
+		  if(fileInput.files[0]){
+			const key = mapKeys[f];
+			payload[key] = await fileToBase64(fileInput.files[0]);
+			payload[key+'Type'] = fileInput.files[0].type;
+		  }
+		}
 
-    loadBuySellDropdowns();
-  </script>
+		const res = await fetch(DELIVERY_API,{
+		  method:'POST',
+		  body: JSON.stringify(payload)
+		}).then(r=>r.json());
+
+		if(res.status==='success'){
+		  alert('Delivery record saved! ID: '+res.id);
+		  window.location.reload();
+		} else {
+		  alert('Error: '+res.message);
+		  submitBtn.disabled = false;
+		  submitBtn.textContent = originalText;
+		}
+	  } catch(err){
+		alert('Submission failed: '+err.message);
+		submitBtn.disabled = false;
+		submitBtn.textContent = originalText;
+	  }
+	});
+
+	// Load dropdowns
+	loadBuySellDropdowns();
+	</script>
+
 </body>
 </html>
