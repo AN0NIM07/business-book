@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Delivery Entry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Base Styles ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: #f6f8fa; color: #333; padding: 20px; }
+
+    /* ===== Container ===== */
+    .container { max-width: 750px; margin: 0 auto; }
+
+    /* ===== Card ===== */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+    .card h2 { margin-bottom: 25px; font-weight: 600; color: #1f2937; text-align: center; }
+
+    /* ===== Form Grid ===== */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .form-grid-full { grid-column: 1 / -1; }
+
+    /* ===== Form Inputs ===== */
+    label { display: block; margin-bottom: 6px; font-weight: 500; color: #4b5563; }
+    input, select, textarea { 
+      width: 100%; 
+      padding: 10px 12px; 
+      border: 1px solid #d1d5db; 
+      border-radius: 8px;
+      font-size: 14px; 
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { 
+      border-color: #3b82f6; 
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2); 
+      outline: none; 
+    }
+
+    /* ===== File Input Custom ===== */
+    .file-input-wrapper { position: relative; overflow: hidden; }
+    .file-input-wrapper input[type=file] {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-label {
+      display: inline-block;
+      width: 100%;
+      padding: 10px 12px;
+      background: #e0f2fe;
+      border: 1px dashed #3b82f6;
+      border-radius: 8px;
+      text-align: center;
+      color: #2563eb;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .file-label:hover { background: #bae6fd; }
+
+    /* ===== Preview Images ===== */
+    .preview-img { max-width: 100%; max-height: 120px; margin-top: 8px; border-radius: 6px; }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #3b82f6, #06b6d4);
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h2>New Delivery Entry</h2>
+      <form id="deliveryForm">
+        <div class="form-grid">
+          <!-- BUY FROM Dropdown -->
+          <div>
+            <label for="buyId">BUY FROM</label>
+            <select id="buyId" required></select>
+          </div>
+
+          <!-- SELL TO Dropdown -->
+          <div>
+            <label for="sellId">SELL TO</label>
+            <select id="sellId" required></select>
+          </div>
+
+          <!-- Buy Delivery Order Slip -->
+          <div class="form-grid-full">
+            <label for="buyDOFile">Buy Delivery Order Slip</label>
+            <div class="file-input-wrapper">
+              <label class="file-label" for="buyDOFile">Upload Image</label>
+              <input type="file" id="buyDOFile" accept="image/*">
+            </div>
+            <img id="buyDOPreview" class="preview-img" alt="">
+          </div>
+
+          <!-- Sell Delivery Order Slip -->
+          <div class="form-grid-full">
+            <label for="sellDOFile">Sell Delivery Order Slip</label>
+            <div class="file-input-wrapper">
+              <label class="file-label" for="sellDOFile">Upload Image</label>
+              <input type="file" id="sellDOFile" accept="image/*">
+            </div>
+            <img id="sellDOPreview" class="preview-img" alt="">
+          </div>
+
+          <!-- Buy Received Acknowledgment -->
+          <div class="form-grid-full">
+            <label for="buyRAFile">Buy Received Acknowledgment</label>
+            <div class="file-input-wrapper">
+              <label class="file-label" for="buyRAFile">Upload Image</label>
+              <input type="file" id="buyRAFile" accept="image/*">
+            </div>
+            <img id="buyRAPreview" class="preview-img" alt="">
+          </div>
+
+          <!-- Sell Received Acknowledgment -->
+          <div class="form-grid-full">
+            <label for="sellRAFile">Sell Received Acknowledgment</label>
+            <div class="file-input-wrapper">
+              <label class="file-label" for="sellRAFile">Upload Image</label>
+              <input type="file" id="sellRAFile" accept="image/*">
+            </div>
+            <img id="sellRAPreview" class="preview-img" alt="">
+          </div>
+
+          <!-- Extra Details -->
+          <div class="form-grid-full">
+            <label for="extraDetails">Extra Details</label>
+            <textarea id="extraDetails" rows="3" placeholder="Optional"></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; text-align:center;">
+          <button type="submit" class="btn">Submit Delivery Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const DELIVERY_API = 'https://script.google.com/macros/s/AKfycbzfTTcEoAx5YAE5tveTQCZa2qFiKIVB3AoIgUyiIeMSv3jTqTie4O0FnDdu0pnJZ0PU/exec';
+    const BUYSELL_API = 'https://script.google.com/macros/s/AKfycbxGMoefx5yf_gZ5CW49_uSF-WUHtvY2505ONQDI9kp3OvinqCKT--hPvjnQuA3BQwwj/exec';
+
+    async function loadBuySellDropdowns() {
+      try {
+        const data = await fetch(BUYSELL_API).then(r => r.json());
+        const buyEntries = data.filter(d => d.action === 'BUY').reverse();
+        const sellEntries = data.filter(d => d.action === 'SELL').reverse();
+
+        const buySelect = document.getElementById('buyId');
+        const sellSelect = document.getElementById('sellId');
+
+        buyEntries.forEach(d => {
+          const option = document.createElement('option');
+          option.value = d.id;
+          option.text = `${d.date} | ${d.company} | ${d.productType} | ${d.product} | ${d.weight} | ${d.price} | ${d.cqDate}`;
+          buySelect.add(option);
+        });
+
+        sellEntries.forEach(d => {
+          const option = document.createElement('option');
+          option.value = d.id;
+          option.text = `${d.date} | ${d.company} | ${d.productType} | ${d.product} | ${d.weight} | ${d.price} | ${d.cqDate}`;
+          sellSelect.add(option);
+        });
+      } catch (err) {
+        console.error(err);
+        alert('Error loading Buy-Sell data');
+      }
+    }
+
+    function fileToBase64(file) {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function setupPreview(inputId, previewId) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+      if(!input) return;
+      input.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (file && preview) preview.src = URL.createObjectURL(file);
+      });
+    }
+
+    // Setup previews
+    setupPreview('buyDOFile','buyDOPreview');
+    setupPreview('sellDOFile','sellDOPreview');
+    setupPreview('buyRAFile','buyRAPreview');
+    setupPreview('sellRAFile','sellRAPreview');
+
+    document.getElementById('deliveryForm').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const payload = {
+        buyId: document.getElementById('buyId').value,
+        sellId: document.getElementById('sellId').value,
+        extraDetails: document.getElementById('extraDetails').value
+      };
+
+      const files = ['buyDOFile','sellDOFile','buyRAFile','sellRAFile'];
+      const mapKeys = {
+        buyDOFile: 'buyDO',
+        sellDOFile: 'sellDO',
+        buyRAFile: 'buyRA',
+        sellRAFile: 'sellRA'
+      };
+
+      for (const f of files) {
+        const fileInput = document.getElementById(f);
+        if(fileInput.files[0]) {
+          const key = mapKeys[f];
+          payload[key] = await fileToBase64(fileInput.files[0]);
+          payload[key+'Type'] = fileInput.files[0].type;
+        }
+      }
+
+      try {
+        const res = await fetch(DELIVERY_API, {
+          method:'POST',
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if(res.status==='success') {
+          alert('Delivery record saved! ID: '+res.id);
+          window.location.reload();
+        } else {
+          alert('Error: '+res.message);
+        }
+      } catch(err) {
+        alert('Submission failed: '+err.message);
+      }
+    });
+
+    loadBuySellDropdowns();
+  </script>
+</body>
+</html>
